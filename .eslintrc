@@ -1,6 +1,7 @@
 {
 	"extends": "react-app",
     "globals": {
-        "WebIM": true
+        "WebIM": true,
+		"sdk": true
     }
 }

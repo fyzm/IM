@@ -11,11 +11,11 @@ import thunk from 'redux-thunk';
 //import asyncMiddleware from '../lib/async-middleware'
 
 import '../sdk/init';
-//import appList from './reducer/app';
+import sign from './reducer/sign';
 
 
 const _reducers = {
-    
+    sign: sign
 };
 
 const reducers = combineReducers(_reducers);
@@ -28,23 +28,14 @@ const reducers = combineReducers(_reducers);
 
 //export default (/*, DevTool*/) => {
     //const reduxRouterMiddleware = syncHistory(history);
-    let dev = true;
  
-    let middlewares = [thunk];
+let middlewares = [thunk];
 
-    let finalCreateStore;
-    if (dev) {
-        finalCreateStore = compose(
-            applyMiddleware(...middlewares)/*,
-             devtools(),
-            //DevTool.instrument(),
-            //persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))*/
-        )(createStore);
-    } else {
-        finalCreateStore = applyMiddleware(...middlewares)(createStore);
-    }
+let finalCreateStore;
 
-    const store = finalCreateStore(reducers);
+finalCreateStore = applyMiddleware(...middlewares)(createStore);
+
+const store = finalCreateStore(reducers);
 
     //return store;
 //}

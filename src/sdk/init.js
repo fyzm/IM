@@ -1,6 +1,6 @@
 let conn = new WebIM.connection({
     isMultiLoginSessions: WebIM.config.isMultiLoginSessions,
-    https: typeof WebIM.config.https === 'boolean' ? WebIM.config.https : location.protocol === 'https:',
+    https: false,
     url: WebIM.config.xmppURL,
     heartBeatWait: WebIM.config.heartBeatWait,
     autoReconnectNumMax: WebIM.config.autoReconnectNumMax,
