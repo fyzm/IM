@@ -6,7 +6,7 @@
  class Person{
      constructor() {
         this.age = 0;
-        //this.name = '';
+        this.getAge = this.getAge.bind(this);
      }
 
     //  get name() {
@@ -17,24 +17,25 @@
     //      name = newValue;
     //  }
 
-    //static name = 'static';
-
+   
      getName() {
          return name;
      }
-     getAge() {
+     getAge (){
          return this.age;
      }
 
  }
 
- let p = new Person();
- console.log(p.name);
- p.name = '123'
- console.log(p.name);
 
- let {age} = p;
- age();
+
+ class B extends Person{
+     constructor() {
+         //super();
+         this.xx = 'yyy';
+     }
+
+ }
 
 
  

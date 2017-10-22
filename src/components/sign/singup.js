@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 
 import {connect} from 'react-redux';
-import {login} from '../../data/actions/sign';
+import {loginWithAsync} from '../../data/actions/sign';
+
+
 @connect(
     state => ({
         loginState: state.sign.loginState
     }),
     {
-        login 
+        loginWithAsync 
     }
   )
 export default class SignUp extends Component {
@@ -18,18 +20,17 @@ export default class SignUp extends Component {
 
     signup = () => {
         
-            if (this.submiting) {
-                return false;
-            }
             var username = this.refs.name.value;
             var pwd = this.refs.auth.value;
             var nickname = this.refs.nickname.value;
             if (!username || !pwd) {
                 return false;
             }
-    
-            let {login} = this.props;
-            login(2);
+            jquery.ajax();
+            //console.log(this.props.dispatch)
+            let {loginWithAsync} = this.props;
+            loginWithAsync(2);
+            //store.dispatch(loginWithAsync(2))
     
             // var options = {
             //     username: username.toLowerCase(),
@@ -56,7 +57,7 @@ export default class SignUp extends Component {
 
                 <button onClick={this.signup}>注册</button>
                 <p>已有账户,
-                    <i onClick={this.signin}>登录 {this.props.loginState}</i>
+                    <i onClick={this.signin}>登录 </i>
                 </p>
             </div>
         );

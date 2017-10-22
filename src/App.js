@@ -16,6 +16,9 @@ import store from './data/create';
   }
 )
 class App extends Component {
+  // componentWillReceiveProps() {
+    
+  // }
   render() {
     return (
       <div className="App">
