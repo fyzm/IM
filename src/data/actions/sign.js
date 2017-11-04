@@ -1,23 +1,36 @@
-export function login(state) {
-    return {
-        type: 'LOGIN_START',
-        payload: {
-            state: state
-        }
-    }
-}
+// export function login(state) {
+//     return {
+//         type: 'LOGIN_START',
+//         payload: {
+//             state: state
+//         }
+//     }
+// }
 
-export function loginWithAsync(state) {
+
+// REG_START/REG_SUCCESS/REG_ERROR 1 2 3
+
+import {createAction, REG_STATE_CHANGE} from './actiontypes';
+
+export const regStatus = createAction(REG_STATE_CHANGE, 'state');
+export function reg(options) {
     return (dispatch, getState) => {
-        let startTime = Date.now();
-        setTimeout(() => {
-            dispatch({
-                type: 'LOGIN_START',
-                payload: {
-                    state: state
-                }
-            });
-            console.log(Date.now() - startTime);
-        }, 2000);
+        return new Promise((resolve, reject) => {
+            let onSuccess = options.success;
+            let onError = options.error;
+            options.success = function() {
+                onSuccess && onSuccess();
+                dispatch(regStatus(2));
+                resolve();
+
+            }
+            options.error = function(e) {
+                onError && onError();
+                dispatch(regStatus(3));
+                reject();
+            };
+            dispatch(regStatus(1));
+            sdk.conn.registerUser(options);
+        });
     }
 }

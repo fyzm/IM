@@ -87,6 +87,10 @@ module.exports = {
     extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
       
+      '@data': __dirname + '/../src/data',
+      '@component': __dirname + '/../src/components',
+      '@history': __dirname + '/../src/history',
+      
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -178,6 +182,7 @@ module.exports = {
                   ident: 'postcss',
                   plugins: () => [
                     require('postcss-flexbugs-fixes'),
+                    require("postcss-cssnext")(),
                     autoprefixer({
                       browsers: [
                         '>1%',
@@ -187,6 +192,8 @@ module.exports = {
                       ],
                       flexbox: 'no-2009',
                     }),
+                    require("postcss-import")(),
+                    require('postcss-simple-vars'),
                   ],
                 },
               },

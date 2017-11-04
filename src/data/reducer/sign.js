@@ -1,10 +1,12 @@
+import {REG_STATE_CHANGE} from '../actions/actiontypes';
+
 export default function signReducer(state = {
-    loginState: 1, //登录状态， 0 表示未登录， 1表示登录成功 2表示登录失败
+    regState: 0, //1 注册开始， 2 注册成功， 3 注册失败
 }, action) {
     switch (action.type) {
-        case 'LOGIN_START':
+        case REG_STATE_CHANGE:
             return Object.assign({}, state, {
-                loginState: action.payload.state
+                regState: action.payload.state
             })
     }
     return state;
