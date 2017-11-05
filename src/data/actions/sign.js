@@ -34,3 +34,17 @@ export function reg(options) {
         });
     }
 }
+
+export function login(options) {
+    return (dispatch, getState) => {
+        return new Promise((resolve, reject) => {
+            options.success = function(token) {
+                resolve(token);
+            }
+            options.error = function(e) {
+                reject(e);
+            };
+            sdk.conn.open(options);
+        });
+    }
+} 

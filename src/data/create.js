@@ -3,9 +3,8 @@
  * 构造redux
  */
 
-'use strict';
 
-import {compose, createStore, combineReducers, applyMiddleware} from 'redux';
+import {/*compose, */createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 
 //import asyncMiddleware from '../lib/async-middleware'

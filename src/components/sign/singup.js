@@ -9,7 +9,11 @@ import {reg} from '@data/actions/sign';
 import tooltip from '@component/common/tooltip';
 import './index.css';
 
+import safeRender from '@decorator/saferender';
+
 import {Link} from 'react-router';
+import history from '@history/history';
+
 @connect(
     state => ({
         regState: state.sign.regState
@@ -17,13 +21,28 @@ import {Link} from 'react-router';
     {
         reg
     }
-  )
+)
+@safeRender({
+    active: true,
+    errorHandler: function(e)  {
+        //alert(e.displayName + '---' + e.method)
+    }
+})
+
+
 export default class SignUp extends Component {
 
-    keyDown = () => {
 
+    componentWillMount() {
+        //
+        //throw new Error('');
+        
     }
 
+    // shouldComponentUpdate() {
+        
+        
+    // }
     signup = () => {
         
         let username = this.refs.name.value;
@@ -47,6 +66,7 @@ export default class SignUp extends Component {
 
         this.props.reg(options).then(() => {
             //跳转
+            history.push('/login');
         }).catch(() => {
             //显示tooltip
             tooltip.show({
@@ -61,6 +81,7 @@ export default class SignUp extends Component {
             'signup': true
         });
         let {regState} = this.props;
+        
         return (
             <div className={mainClassName}>
                 <h2>注册页面</h2>
@@ -69,19 +90,18 @@ export default class SignUp extends Component {
                     className="input"
                     placeholder='输入用户名' 
                     autoFocus={true} 
-                    onInput={this.keyDown}/>
+                    />
                 <input ref='auth' 
                     name="auth" 
                     className="input"
                     placeholder='输入密码' 
                     type='password' 
-                    onInput={this.keyDown}/>
+                    />
                 <input ref="nickname" 
-                
                     name="nickname" 
                     className="input"
                     placeholder='输入昵称'  
-                    onInput={this.keyDown}/>
+                />
 
                 <button className="button" onClick={this.signup}>注册</button>
                 <p>已有账户,
