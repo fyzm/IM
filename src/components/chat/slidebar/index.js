@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {getToken} from '@util/token';
 
 import Icon from '@component/common/icon';
-import Dialog from '@component/common/dialog';
+import Avator from '@component/common/avator';
 import {showDialog} from '@component/common/dialog';
 import './index.css';
 export default class SlideBar extends Component {
@@ -11,26 +11,25 @@ export default class SlideBar extends Component {
         showPanel: false
     }
     showAddRosterPanel = () => {
-        this.setState({
-            showPanel: true
-        });
+        // this.setState({
+        //     showPanel: true
+        // });
 
-        // showDialog({
-        //     content:
-        //         <div className="input-container">
-        //             <input type="text" placeholder="输入名字" />
-        //         </div>,
+        showDialog({
+            content:
+                <div className="input-container">
+                    <input type="text" className="input" placeholder="输入名字" />
+                </div>,
            
-        //     footer:<div className="footer">
-        //             <button className="btn" onClick = {this.addRoster}>确定</button>
-        //         </div>,
-        //     title: '添加好友'
-        // })
+            footer:<div className="footer">
+                    <button className="button" onClick = {this.addRoster}>确定</button>
+                </div>,
+            title: '添加好友'
+        })
     }
     addRoster = () => {
         sdk.conn.subscribe({
             to: this.refs.nickname.value,
-            // Demo里面接收方没有展现出来这个message，在status字段里面
             message: '加个好友呗!'   
         });
 
@@ -46,11 +45,11 @@ export default class SlideBar extends Component {
         return (
             <div className="slidebar">
                 <div className="profile">
-                    <div className="app-item avator">
-                        <Icon type="usered" />
+                    <div className="app-item">
+                        <Avator />
                     </div>
                     {/*<span className="iconfont icon-usered" />*/}
-                    <div>{username}</div>
+                    <div className="name">{username}</div>
                 </div>
                 <div className="menus">
                     <div className="app-item chat">
@@ -66,21 +65,7 @@ export default class SlideBar extends Component {
                     </div>
                 </div>
 
-                {showPanel ? <Dialog 
-                    content = {
-                        <div className="input-container">
-                            <input type="text" ref="nickname" placeholder="输入名字" />
-                        </div>
-                    }
-                    footer = {
-                        <div className="footer">
-                            <button className="btn" onClick = {this.addRoster}>确定</button>
-                        </div>
-                    }
-                    //onClose = {}
-                    title = '添加好友'>
-                    
-                </Dialog> : null}
+                
             </div>
         );
     }
