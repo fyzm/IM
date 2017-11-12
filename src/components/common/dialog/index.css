@@ -1,4 +1,3 @@
-
 .dialog-outer {
     position: fixed;
     width: 100%;
@@ -33,10 +32,12 @@
                 font-size:20px;
             }
         }
+
         .title-container {
             padding: 15px;
             border-bottom: 1px solid #eee;
         }
+        
         .content-container {
             padding: 15px;
         }

@@ -28,6 +28,13 @@ export default class SlideBar extends Component {
         })
     }
     addRoster = () => {
+        if (this.refs.nickname) {
+            let value = this.refs.nickname.value;
+            if (!value.trim()) {
+                alert('内容不能为空');
+                return;
+            }
+        }
         sdk.conn.subscribe({
             to: this.refs.nickname.value,
             message: '加个好友呗!'   

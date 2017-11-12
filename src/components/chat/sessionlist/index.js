@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 
-import Dialog from '@component/common/dialog';
-import {showDialog, closeDialog} from '@component/common/dialog';
+import Avator from '@component/common/avator';
 
+import {showDialog, closeDialog} from '@component/common/dialog';
+import {Link} from 'react-router';
 import './index.css';
+
+import {connect} from 'react-redux';
+
+import {setCurrentSession} from '@data/actions/session';
 export default class SessionList extends Component {
     constructor(props) {
         super(props);
         this.state = {
             friendList: [],
             showPanel: false,
-
         };
     }
 
@@ -34,11 +38,7 @@ export default class SessionList extends Component {
             this.setState({
                 subscribeMessage: message
             });
-            this.showPresenceDialog();
-            //this.subscribeMessage = message;
-            
-            //显示统一/拒绝面板，如果同意，
-            
+            this.showPresenceDialog(); 
         }
     }
 
@@ -104,11 +104,12 @@ export default class SessionList extends Component {
     render() {
         let {friendList, showPanel} = this.state;
         // let message = this.subscribeMessage;
-        // let 
+        let {chatId} = this.props;
         return (
             <div className="sessionlist">
                 {friendList.length ? friendList.map((friend) => {
-                    return <SessionItem friend = {friend} key = {friend.name}/>
+                    let isSelected = friend.name === chatId;
+                    return <SessionItem friend = {friend} key = {friend.name} isSelected = {isSelected}/>
                 }) : null}
                 
             </div>
@@ -116,11 +117,37 @@ export default class SessionList extends Component {
     }
 }
 
+
+@connect(
+    (state) => ({
+
+    }),
+    {
+        setCurrentSession
+    }
+)
 class SessionItem extends Component{
+
+
+    itemClick = () => {
+        let {setCurrentSession, friend} = this.props;
+        setCurrentSession(friend);
+    }
     render() {
-        let {friend} = this.props;
-        return <div className="session-item">
-            {friend.name}
+        let {friend, isSelected} = this.props;
+        let url = `chat/single/${friend.name}`;
+
+        return <div className={ isSelected? "session-item-outer selected" : "session-item-outer"}>
+            <Link to = {url} className="session-item" onClick = {this.itemClick}>
+                <div className="ctn-avator">
+                    <Avator />
+                </div>
+                <div className="session-inner">
+                    <div className="name">{friend.name}</div>
+                    <div className="msg-preview"></div>
+                </div>
+            </Link>
+            
         </div>;
     }
 }
