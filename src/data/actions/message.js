@@ -1,6 +1,8 @@
 import {GET_MSGS, SEND_TEXT_MSG, CHANGE_MSG_STATUS, createAction } from './actiontypes';
+import {getToken} from '@util/token';
 
 export let addTextMessage = createAction(SEND_TEXT_MSG, 'to', 'msg');
+
 export function sendTextMessage(to, text, chatType) {
     return (dispatch, getState) => {
         let id = sdk.conn.getUniqueId();             // 生成本地消息id
@@ -10,6 +12,8 @@ export function sendTextMessage(to, text, chatType) {
             to: to,                 // 接收消息对象（用户id）
             roomType: false,
             success: function (id, serverMsgId) {
+                msg.fromMe = true;
+                msg.from = getToken().user.username;
                 dispatch(addTextMessage(to, msg));
             },
             fail: function(e){
