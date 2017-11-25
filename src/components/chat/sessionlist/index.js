@@ -8,29 +8,51 @@ import './index.css';
 
 import {connect} from 'react-redux';
 
-import {setCurrentSession} from '@data/actions/session';
+import eventEmitter from '@util/event';
+
+import {setCurrentSession, getRosters} from '@data/actions/session';
+import shallowequal from 'shallowequal';
+
+@connect(
+    (state) => ({
+        rosters: state.session.rosters
+    }),
+    {
+        getRosters
+    }
+)
 export default class SessionList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            friendList: [],
+            
             showPanel: false,
         };
     }
 
     componentWillMount() {
-        sdk.conn.listen({
-            onOpened: (message) =>  {
-                this.getRosters();
-            },
-            onRoster: () => {
-                this.getRosters();
-            },
-            onPresence: (message) => {
-                this.handlePresence(message);
-            }
-        });
+        // sdk.conn.listen({
+        //     onOpened: (message) =>  {
+        //         this.props.getRosters();
+        //     },
+        //     onTextMessage: (message) => {
+        //         debugger
+        //     },
+        //     onRoster: () => {
+        //         this.props.getRosters();
+        //     },
+        //     onPresence: (message) => {
+        //         this.handlePresence(message);
+        //     }
+        // });
+        eventEmitter.on('presence', this.handlePresence);
     }
+
+    componentWillUnmount() {
+        eventEmitter.removeListener('presence', this.handlePresence);
+        
+    }
+
 
     handlePresence = (message) => {
         //对方收到请求加为好友
@@ -85,25 +107,10 @@ export default class SessionList extends Component {
     }
 
 
-    getRosters = () => {
-        sdk.conn.getRoster({
-            success: (rosters) => {
-                rosters = rosters.filter((roster) => {
-                    return roster.subscription === 'both';
-                });
-
-                this.setState({
-                    friendList: rosters
-                });
-            },
-            error: (e) => {
-                //alert(e);
-            }
-        });
-    }
     render() {
-        let {friendList, showPanel} = this.state;
+        let {showPanel} = this.state;
         // let message = this.subscribeMessage;
+        let {rosters: friendList} = this.props;
         let {chatId} = this.props;
         return (
             <div className="sessionlist">
@@ -128,7 +135,10 @@ export default class SessionList extends Component {
 )
 class SessionItem extends Component{
 
-
+    shouldComponentUpdate(nextProps, nextState) {
+        return !shallowequal(nextProps.friend, this.props.friend) 
+            || nextProps.isSelected !== this.props.isSelected;
+    }
     itemClick = () => {
         let {setCurrentSession, friend} = this.props;
         setCurrentSession(friend);
@@ -144,7 +154,9 @@ class SessionItem extends Component{
                 </div>
                 <div className="session-inner">
                     <div className="name">{friend.name}</div>
-                    <div className="msg-preview"></div>
+                    <div className="msg-preview">
+                        {friend.message ? friend.message.value : null}
+                    </div>
                 </div>
             </Link>
             
