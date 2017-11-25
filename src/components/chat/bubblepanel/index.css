@@ -16,8 +16,9 @@
         top: 61px;
         bottom: 180px;
         width: 100%;
+        overflow: auto;
+        
         .ctn-msglist-inner {
-            overflow: auto;
             .message-item {
                 display: flex;
                 padding: 10px;
@@ -27,6 +28,9 @@
                     .avator-outer {
                         margin-left: 15px;
                         margin-right:0;
+                    }
+                    .name{
+                        text-align: right;
                     }
                     .message-text{
                         background: #4eb1f5;
