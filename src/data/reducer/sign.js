@@ -7,7 +7,9 @@ export default function signReducer(state = {
         case REG_STATE_CHANGE:
             return Object.assign({}, state, {
                 regState: action.payload.state
-            })
+            });
+        default:
+            return state;
     }
     return state;
 }
