@@ -16,15 +16,10 @@ import './index.css';
     }
 )
 export default class BubblePanel extends Component {
-<<<<<<< HEAD
-    state = {
-        hasError: false
-=======
 
     componentDidUpdate () {
         
         this.refs.list.scrollTop = this.refs.inner.offsetHeight;
->>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
     }
     sendTextMessage = () => {
         let {sendTextMessage, currentSession, chatType} = this.props;
@@ -39,14 +34,9 @@ export default class BubblePanel extends Component {
         }
         return msglist[currentSession.name] || [];
     }
-
- 
     render() {
         let {currentSession} = this.props;
         let msgs = this.getMsgs();
-        if (this.state.hasError) {
-            return <div>error</div>
-        }
         return (
             <div className="ctn-bubblepanel">
                 <div className="title">
@@ -73,29 +63,6 @@ export default class BubblePanel extends Component {
     }
 }
 
-<<<<<<< HEAD
-class BubbleItemWithErrorWrapper extends Component{
-    constructor(props) {
-        super(props);
-        this.state = { hasError: false };
-      }
-    
-      componentDidCatch(error, info) {
-        // Display fallback UI
-        this.setState({ hasError: true });
-        // You can also log the error to an error reporting service
-      }
-    
-      render() {
-        if (this.state.hasError) {
-          // You can render any custom fallback UI
-          return <h1>Something went wrong.</h1>;
-        }
-        return <BubbleItem msg = {this.props.msg} />;
-      }
-}
-
-=======
 
 class BubbleItemWithErrorWrapper extends Component{
     state = {
@@ -115,7 +82,6 @@ class BubbleItemWithErrorWrapper extends Component{
         return <BubbleItem msg = {this.props.msg} />
     }
 }
->>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
 class BubbleItem extends Component{
 
     componentWillMount() {
@@ -130,7 +96,6 @@ class BubbleItem extends Component{
         let {msg} = this.props;
         let fromMe = msg.fromMe; //true 表示我发出去， to 表示我收到的
         
-        //throw Error('error');
         let messageItemClassName = classnames({
             'message-item': true,
             'you': !fromMe,
@@ -139,11 +104,7 @@ class BubbleItem extends Component{
 
          
         return (
-<<<<<<< HEAD
-            [<div className={messageItemClassName}>
-=======
             <div className={messageItemClassName}>
->>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
                 <div className="message-item-outer">
                     {!fromMe ? <div className="avator-outer">
                         <Avator />
@@ -153,11 +114,7 @@ class BubbleItem extends Component{
                             {fromMe ? msg.from : msg.to}
                         </div>
                         <div className="message-text">
-<<<<<<< HEAD
-                            {msg.value || msg.data}
-=======
                             {msg.value}
->>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
                         </div>
                     </div>
 
@@ -165,14 +122,8 @@ class BubbleItem extends Component{
                         <Avator />
                     </div> : null}
                 </div>
-<<<<<<< HEAD
-                
-            </div>,
-            ]
-=======
             </div>
            
->>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
         )
     }
     

@@ -8,14 +8,10 @@ import './index.css';
 
 import {connect} from 'react-redux';
 
-<<<<<<< HEAD
-import {setCurrentSession, getRosters} from '@data/actions/session';
-=======
 import eventEmitter from '@util/event';
 
 import {setCurrentSession, getRosters} from '@data/actions/session';
 import shallowequal from 'shallowequal';
->>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
 
 @connect(
     (state) => ({
@@ -39,29 +35,17 @@ export default class SessionList extends Component {
         //     onOpened: (message) =>  {
         //         this.props.getRosters();
         //     },
-<<<<<<< HEAD
-        //     onRoster: () => {
-        //         this.props.getRosters();
-        //     },
-        //     onTextMessage: (message) => {
-        //         debugger
-        //     },
-=======
         //     onTextMessage: (message) => {
         //         debugger
         //     },
         //     onRoster: () => {
         //         this.props.getRosters();
         //     },
->>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
         //     onPresence: (message) => {
         //         this.handlePresence(message);
         //     }
         // });
-<<<<<<< HEAD
-=======
         eventEmitter.on('presence', this.handlePresence);
->>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
     }
 
     componentWillUnmount() {
@@ -123,31 +107,8 @@ export default class SessionList extends Component {
     }
 
 
-<<<<<<< HEAD
-    getRosters = () => {
-        // sdk.conn.getRoster({
-        //     success: (rosters) => {
-        //         rosters = rosters.filter((roster) => {
-        //             return roster.subscription === 'both';
-        //         });
-
-        //         this.setState({
-        //             friendList: rosters
-        //         });
-        //     },
-        //     error: (e) => {
-        //         //alert(e);
-        //     }
-        // });
-    }
     render() {
         let {showPanel} = this.state;
-        let {rosters: friendList} = this.props;
-        console.log(friendList)
-=======
-    render() {
-        let {showPanel} = this.state;
->>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
         // let message = this.subscribeMessage;
         let {rosters: friendList} = this.props;
         let {chatId} = this.props;
