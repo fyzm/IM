@@ -16,8 +16,15 @@ import './index.css';
     }
 )
 export default class BubblePanel extends Component {
+<<<<<<< HEAD
     state = {
         hasError: false
+=======
+
+    componentDidUpdate () {
+        
+        this.refs.list.scrollTop = this.refs.inner.offsetHeight;
+>>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
     }
     sendTextMessage = () => {
         let {sendTextMessage, currentSession, chatType} = this.props;
@@ -45,8 +52,8 @@ export default class BubblePanel extends Component {
                 <div className="title">
                     {currentSession ? currentSession.name : ''}
                 </div>
-                <div className="ctn-msglist">
-                    <div className="ctn-msglist-inner">
+                <div className="ctn-msglist" ref = "list">
+                    <div className="ctn-msglist-inner" ref="inner">
                     {msgs.map((msg) => {
                         return <BubbleItemWithErrorWrapper key={msg.id} msg = {msg} />
                     })}
@@ -66,6 +73,7 @@ export default class BubblePanel extends Component {
     }
 }
 
+<<<<<<< HEAD
 class BubbleItemWithErrorWrapper extends Component{
     constructor(props) {
         super(props);
@@ -87,8 +95,36 @@ class BubbleItemWithErrorWrapper extends Component{
       }
 }
 
+=======
+
+class BubbleItemWithErrorWrapper extends Component{
+    state = {
+        hasError: false
+    }
+    componentDidCatch (error, info){
+        this.setState({ hasError: true });
+        // You can also log the error to an error reporting service
+        //logErrorToMyService(error, info);
+        console.error(error, info);
+    }
+
+    render() {
+        if (this.state.hasError) {
+            return <div>出错了，请联系RD修复</div>
+        }
+        return <BubbleItem msg = {this.props.msg} />
+    }
+}
+>>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
 class BubbleItem extends Component{
 
+    componentWillMount() {
+        //setTimeout(() => {
+            //throw new Error('error');
+        //}, 0)
+
+        //throw new Error('error');
+    }
 
     render() {
         let {msg} = this.props;
@@ -100,8 +136,14 @@ class BubbleItem extends Component{
             'you': !fromMe,
             'me': fromMe
         });
+
+         
         return (
+<<<<<<< HEAD
             [<div className={messageItemClassName}>
+=======
+            <div className={messageItemClassName}>
+>>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
                 <div className="message-item-outer">
                     {!fromMe ? <div className="avator-outer">
                         <Avator />
@@ -111,7 +153,11 @@ class BubbleItem extends Component{
                             {fromMe ? msg.from : msg.to}
                         </div>
                         <div className="message-text">
+<<<<<<< HEAD
                             {msg.value || msg.data}
+=======
+                            {msg.value}
+>>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
                         </div>
                     </div>
 
@@ -119,9 +165,14 @@ class BubbleItem extends Component{
                         <Avator />
                     </div> : null}
                 </div>
+<<<<<<< HEAD
                 
             </div>,
             ]
+=======
+            </div>
+           
+>>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
         )
     }
     

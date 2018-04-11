@@ -8,7 +8,14 @@ import './index.css';
 
 import {connect} from 'react-redux';
 
+<<<<<<< HEAD
 import {setCurrentSession, getRosters} from '@data/actions/session';
+=======
+import eventEmitter from '@util/event';
+
+import {setCurrentSession, getRosters} from '@data/actions/session';
+import shallowequal from 'shallowequal';
+>>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
 
 @connect(
     (state) => ({
@@ -32,17 +39,36 @@ export default class SessionList extends Component {
         //     onOpened: (message) =>  {
         //         this.props.getRosters();
         //     },
+<<<<<<< HEAD
         //     onRoster: () => {
         //         this.props.getRosters();
         //     },
         //     onTextMessage: (message) => {
         //         debugger
         //     },
+=======
+        //     onTextMessage: (message) => {
+        //         debugger
+        //     },
+        //     onRoster: () => {
+        //         this.props.getRosters();
+        //     },
+>>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
         //     onPresence: (message) => {
         //         this.handlePresence(message);
         //     }
         // });
+<<<<<<< HEAD
+=======
+        eventEmitter.on('presence', this.handlePresence);
+>>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
     }
+
+    componentWillUnmount() {
+        eventEmitter.removeListener('presence', this.handlePresence);
+        
+    }
+
 
     handlePresence = (message) => {
         //对方收到请求加为好友
@@ -97,6 +123,7 @@ export default class SessionList extends Component {
     }
 
 
+<<<<<<< HEAD
     getRosters = () => {
         // sdk.conn.getRoster({
         //     success: (rosters) => {
@@ -117,7 +144,12 @@ export default class SessionList extends Component {
         let {showPanel} = this.state;
         let {rosters: friendList} = this.props;
         console.log(friendList)
+=======
+    render() {
+        let {showPanel} = this.state;
+>>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
         // let message = this.subscribeMessage;
+        let {rosters: friendList} = this.props;
         let {chatId} = this.props;
         return (
             <div className="sessionlist">
@@ -142,7 +174,10 @@ export default class SessionList extends Component {
 )
 class SessionItem extends Component{
 
-
+    shouldComponentUpdate(nextProps, nextState) {
+        return !shallowequal(nextProps.friend, this.props.friend) 
+            || nextProps.isSelected !== this.props.isSelected;
+    }
     itemClick = () => {
         let {setCurrentSession, friend} = this.props;
         setCurrentSession(friend);
@@ -158,7 +193,9 @@ class SessionItem extends Component{
                 </div>
                 <div className="session-inner">
                     <div className="name">{friend.name}</div>
-                    <div className="msg-preview"></div>
+                    <div className="msg-preview">
+                        {friend.message ? friend.message.value : null}
+                    </div>
                 </div>
             </Link>
             

@@ -20,6 +20,7 @@
         
         .ctn-msglist-inner {
             .message-item {
+<<<<<<< HEAD
                 width: 100%;
                 overflow: auto;
                 .message-item-outer{
@@ -35,6 +36,20 @@
                         float:right;
 
                     }
+=======
+                overflow:auto;
+                .message-item-outer{
+                    display: flex;
+                    padding: 10px;
+                    box-sizing: border-box;
+                }
+                
+                &.me{
+                    .message-item-outer{
+                        float:right;
+                    }
+                    
+>>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
                     .avator-outer {
                         margin-left: 15px;
                         margin-right:0;
