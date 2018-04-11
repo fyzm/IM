@@ -3,11 +3,23 @@ import React, { Component } from 'react';
 import SlideBar from './slidebar';
 import SessionList from './sessionlist';
 import BubblePanel from './bubblepanel';
+import {connect} from 'react-redux';
+import {init} from '@data/actions/message';
 
 import './index.css';
+
+@connect(
+    (state) => ({
+    }),
+    {
+        init
+    }
+)
 export default class Chat extends Component {
 
-
+    componentWillMount() {
+        this.props.init();
+    }
 
     render() {
         let {params} = this.props;

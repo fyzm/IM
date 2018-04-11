@@ -8,28 +8,40 @@ import './index.css';
 
 import {connect} from 'react-redux';
 
-import {setCurrentSession} from '@data/actions/session';
+import {setCurrentSession, getRosters} from '@data/actions/session';
+
+@connect(
+    (state) => ({
+        rosters: state.session.rosters
+    }),
+    {
+        getRosters
+    }
+)
 export default class SessionList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            friendList: [],
+            
             showPanel: false,
         };
     }
 
     componentWillMount() {
-        sdk.conn.listen({
-            onOpened: (message) =>  {
-                this.getRosters();
-            },
-            onRoster: () => {
-                this.getRosters();
-            },
-            onPresence: (message) => {
-                this.handlePresence(message);
-            }
-        });
+        // sdk.conn.listen({
+        //     onOpened: (message) =>  {
+        //         this.props.getRosters();
+        //     },
+        //     onRoster: () => {
+        //         this.props.getRosters();
+        //     },
+        //     onTextMessage: (message) => {
+        //         debugger
+        //     },
+        //     onPresence: (message) => {
+        //         this.handlePresence(message);
+        //     }
+        // });
     }
 
     handlePresence = (message) => {
@@ -86,23 +98,25 @@ export default class SessionList extends Component {
 
 
     getRosters = () => {
-        sdk.conn.getRoster({
-            success: (rosters) => {
-                rosters = rosters.filter((roster) => {
-                    return roster.subscription === 'both';
-                });
+        // sdk.conn.getRoster({
+        //     success: (rosters) => {
+        //         rosters = rosters.filter((roster) => {
+        //             return roster.subscription === 'both';
+        //         });
 
-                this.setState({
-                    friendList: rosters
-                });
-            },
-            error: (e) => {
-                //alert(e);
-            }
-        });
+        //         this.setState({
+        //             friendList: rosters
+        //         });
+        //     },
+        //     error: (e) => {
+        //         //alert(e);
+        //     }
+        // });
     }
     render() {
-        let {friendList, showPanel} = this.state;
+        let {showPanel} = this.state;
+        let {rosters: friendList} = this.props;
+        console.log(friendList)
         // let message = this.subscribeMessage;
         let {chatId} = this.props;
         return (

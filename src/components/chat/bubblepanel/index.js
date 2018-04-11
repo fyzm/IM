@@ -16,6 +16,9 @@ import './index.css';
     }
 )
 export default class BubblePanel extends Component {
+    state = {
+        hasError: false
+    }
     sendTextMessage = () => {
         let {sendTextMessage, currentSession, chatType} = this.props;
         sendTextMessage(currentSession.name, this.refs.msginput.value, chatType);
@@ -29,9 +32,14 @@ export default class BubblePanel extends Component {
         }
         return msglist[currentSession.name] || [];
     }
+
+ 
     render() {
         let {currentSession} = this.props;
         let msgs = this.getMsgs();
+        if (this.state.hasError) {
+            return <div>error</div>
+        }
         return (
             <div className="ctn-bubblepanel">
                 <div className="title">
@@ -40,7 +48,7 @@ export default class BubblePanel extends Component {
                 <div className="ctn-msglist">
                     <div className="ctn-msglist-inner">
                     {msgs.map((msg) => {
-                        return <BubbleItem key={msg.id} msg = {msg} />
+                        return <BubbleItemWithErrorWrapper key={msg.id} msg = {msg} />
                     })}
                     </div>
                 </div>
@@ -58,36 +66,62 @@ export default class BubblePanel extends Component {
     }
 }
 
+class BubbleItemWithErrorWrapper extends Component{
+    constructor(props) {
+        super(props);
+        this.state = { hasError: false };
+      }
+    
+      componentDidCatch(error, info) {
+        // Display fallback UI
+        this.setState({ hasError: true });
+        // You can also log the error to an error reporting service
+      }
+    
+      render() {
+        if (this.state.hasError) {
+          // You can render any custom fallback UI
+          return <h1>Something went wrong.</h1>;
+        }
+        return <BubbleItem msg = {this.props.msg} />;
+      }
+}
+
 class BubbleItem extends Component{
 
 
     render() {
         let {msg} = this.props;
-        let fromMe = true; //true 表示我发出去， to 表示我收到的
+        let fromMe = msg.fromMe; //true 表示我发出去， to 表示我收到的
         
+        //throw Error('error');
         let messageItemClassName = classnames({
             'message-item': true,
             'you': !fromMe,
             'me': fromMe
         });
         return (
-            <div className={messageItemClassName}>
-                {!fromMe ? <div className="avator-outer">
-                    <Avator />
-                </div> : null}
-                <div className="message-item-inner">
-                    <div className="name">
-                        {fromMe ? msg.from : msg.to}
+            [<div className={messageItemClassName}>
+                <div className="message-item-outer">
+                    {!fromMe ? <div className="avator-outer">
+                        <Avator />
+                    </div> : null}
+                    <div className="message-item-inner">
+                        <div className="name">
+                            {fromMe ? msg.from : msg.to}
+                        </div>
+                        <div className="message-text">
+                            {msg.value || msg.data}
+                        </div>
                     </div>
-                    <div className="message-text">
-                        {msg.value}
-                    </div>
-                </div>
 
-                {fromMe ? <div className="avator-outer">
-                    <Avator />
-                </div> : null}
-            </div>
+                    {fromMe ? <div className="avator-outer">
+                        <Avator />
+                    </div> : null}
+                </div>
+                
+            </div>,
+            ]
         )
     }
     

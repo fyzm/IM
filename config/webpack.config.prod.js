@@ -93,6 +93,12 @@ module.exports = {
       
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
+      '@data': __dirname + '/../src/data',
+      '@component': __dirname + '/../src/components',
+      '@history': __dirname + '/../src/history',
+      '@decorator': __dirname + '/../src/decorators',
+      '@util': __dirname + '/../src/utils',
+      
       'react-native': 'react-native-web',
     },
     plugins: [
@@ -188,15 +194,11 @@ module.exports = {
                         ident: 'postcss',
                         plugins: () => [
                           require('postcss-flexbugs-fixes'),
-                          autoprefixer({
-                            browsers: [
-                              '>1%',
-                              'last 4 versions',
-                              'Firefox ESR',
-                              'not ie < 9', // React doesn't support IE8 anyway
-                            ],
-                            flexbox: 'no-2009',
-                          }),
+                          require("postcss-cssnext")(),
+                          
+                          require("postcss-import")(),
+                          require('postcss-simple-vars'),
+                          require('postcss-nested'),
                         ],
                       },
                     },
