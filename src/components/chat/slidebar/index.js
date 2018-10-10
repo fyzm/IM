@@ -3,7 +3,7 @@ import {getToken} from '@util/token';
 
 import Icon from '@component/common/icon';
 import Avator from '@component/common/avator';
-import {showDialog} from '@component/common/dialog';
+import {showDialog, closeDialog} from '@component/common/dialog';
 import './index.css';
 export default class SlideBar extends Component {
 
@@ -18,7 +18,7 @@ export default class SlideBar extends Component {
         showDialog({
             content:
                 <div className="input-container">
-                    <input type="text" className="input" placeholder="输入名字" />
+                    <input type="text" ref={(ins) => {this.nickname=ins;}}className="input" placeholder="输入名字" />
                 </div>,
            
             footer:<div className="footer">
@@ -28,21 +28,19 @@ export default class SlideBar extends Component {
         })
     }
     addRoster = () => {
-        if (this.refs.nickname) {
-            let value = this.refs.nickname.value;
+        if (this.nickname) {
+            let value = this.nickname.value;
             if (!value.trim()) {
                 alert('内容不能为空');
                 return;
             }
         }
         sdk.conn.subscribe({
-            to: this.refs.nickname.value,
+            to: this.nickname.value,
             message: '加个好友呗!'   
         });
 
-        this.setState({
-            showPanel: false
-        });
+       closeDialog();
 
     }
     render() {
