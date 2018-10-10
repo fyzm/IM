@@ -3,13 +3,6 @@ import {getToken} from '@util/token';
 import {getRosters, changeRosterWithMsg} from './session';
 
 
-<<<<<<< HEAD
-import {getRosters} from './session';
-export let addTextMessage = createAction(SEND_TEXT_MSG, 'to', 'msg');
-
-export function init() {
-    return (dispatch, getState) => {
-=======
 import eventEmitter from '@util/event';
 export let addTextMessage = createAction(SEND_TEXT_MSG, 'to', 'msg');
 
@@ -23,30 +16,10 @@ function addTextMessageWithRosterChange(to, msg) {
 
 export function init() {
     return (dispatch) => {
->>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
         sdk.conn.listen({
             onOpened: (message) =>  {
                 dispatch(getRosters());
             },
-<<<<<<< HEAD
-            onRoster: () => {
-                dispatch(getRosters());
-                
-            },
-            onTextMessage: (message) => {
-                dispatch(addTextMessage(message.from, message));
-            },
-            onPresence: (message) => {
-                //this.handlePresence(message);
-            }
-        });
-    };
-    
-}
-
-// init();
-
-=======
             onTextMessage: (message) => {
                 message.value = message.value || message.data;
                 dispatch(addTextMessageWithRosterChange(message.from, message));
@@ -63,7 +36,6 @@ export function init() {
     
 }
 
->>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
 export function sendTextMessage(to, text, chatType) {
     return (dispatch, getState) => {
         let id = sdk.conn.getUniqueId();             // 生成本地消息id
