@@ -34,14 +34,9 @@ export default class BubblePanel extends Component {
         }
         return msglist[currentSession.name] || [];
     }
-
- 
     render() {
         let {currentSession} = this.props;
         let msgs = this.getMsgs();
-        if (this.state.hasError) {
-            return <div>error</div>
-        }
         return (
             <div className="ctn-bubblepanel">
                 <div className="title">
@@ -101,7 +96,6 @@ class BubbleItem extends Component{
         let {msg} = this.props;
         let fromMe = msg.fromMe; //true 表示我发出去， to 表示我收到的
         
-        //throw Error('error');
         let messageItemClassName = classnames({
             'message-item': true,
             'you': !fromMe,

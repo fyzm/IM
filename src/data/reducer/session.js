@@ -1,4 +1,4 @@
-import {SET_CURRENT_SESSION, GET_ROSTERS, SET_ROSTERS} from '../actions/actiontypes';
+import {SET_CURRENT_SESSION, SET_ROSTERS} from '../actions/actiontypes';
 
 export default function sessionReducer(state = {
     current: null, 

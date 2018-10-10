@@ -9,7 +9,6 @@ import {init} from '@data/actions/message';
 
 import './index.css';
 
-
 @connect(() => ({
 
 }), {

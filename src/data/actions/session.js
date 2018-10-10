@@ -26,8 +26,6 @@ export function getRosters() {
         
     }
 }
-    
-
 
 export function changeRosterWithMsg(msg) {
 
