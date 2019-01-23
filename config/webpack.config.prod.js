@@ -200,25 +200,10 @@ module.exports = {
                         plugins: () => [
                           require('postcss-flexbugs-fixes'),
                           require("postcss-cssnext")(),
-<<<<<<< HEAD
                           
                           require("postcss-import")(),
                           require('postcss-simple-vars'),
                           require('postcss-nested'),
-=======
-                          // autoprefixer({
-                          //   browsers: [
-                          //     '>1%',
-                          //     'last 4 versions',
-                          //     'Firefox ESR',
-                          //     'not ie < 9', // React doesn't support IE8 anyway
-                          //   ],
-                          //   flexbox: 'no-2009',
-                          // }),
-                          require("postcss-import")(),
-                          require('postcss-simple-vars'),
-                          require('postcss-nested')
->>>>>>> 0fe259661d5ed4934647c76e754da14a7e3c2b8e
                         ],
                       },
                     },
